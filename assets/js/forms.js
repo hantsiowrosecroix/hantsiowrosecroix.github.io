@@ -72,6 +72,14 @@ export function initForms() {
                 return;
             }
 
+            if (form.hasAttribute('data-remote-submit')) {
+                if (feedback) {
+                    feedback.textContent = '';
+                    feedback.className = 'form-feedback';
+                }
+                return;
+            }
+
             if (feedback) {
                 feedback.textContent = 'Thank you. Your message has been validated on this page. Please use your District Recorder contact channel to submit it officially.';
                 feedback.className = 'form-feedback form-feedback-success';

@@ -169,6 +169,39 @@
                             <li>Be proposed and recommended by existing members</li>
                             <li>Complete the joining process as guided by the Chapter Recorder</li>
                         </ol>
+
+                        <form class="contact-form" data-contact-form data-remote-submit novalidate>
+                            <p class="mb-4 leading-relaxed">
+                                Send a message here if your enquiry relates specifically to Wessex District Chapters.
+                            </p>
+
+                            <input type="hidden" name="subject" value="Wessex District chapter enquiry">
+
+                            <div class="form-grid">
+                                <div class="form-field">
+                                    <label for="wessex-chapter-name">Full name</label>
+                                    <input id="wessex-chapter-name" name="name" type="text" autocomplete="name" required>
+                                    <p class="form-error" data-error-for="name" aria-live="polite"></p>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="wessex-chapter-email">Email address</label>
+                                    <input id="wessex-chapter-email" name="email" type="email" autocomplete="email" required>
+                                    <p class="form-error" data-error-for="email" aria-live="polite"></p>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="wessex-chapter-message">Message</label>
+                                    <textarea id="wessex-chapter-message" name="message" rows="5" required></textarea>
+                                    <p class="form-error" data-error-for="message" aria-live="polite"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="button-primary">Submit</button>
+                                <p class="form-feedback" data-form-feedback aria-live="polite"></p>
+                            </div>
+                        </form>
                     </section>
                 </div>
             </div>
@@ -190,6 +223,10 @@
         </footer>
     </div>
     <script type="module" src="../assets/js/main.js"></script>
+    <script type="module">
+        import { initContactForm } from '../assets/js/contact.js'
+        initContactForm()
+    </script>
 </body>
 
 </html>
