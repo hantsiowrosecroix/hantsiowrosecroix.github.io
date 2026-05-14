@@ -263,6 +263,78 @@ svg {
     --gap: 0.75rem;
 }
 
+.news-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.news-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.news-section-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.news-card-last {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.news-empty {
+    padding: 1.5rem;
+    border: 1px solid rgba(107, 26, 26, 0.12);
+    background: linear-gradient(135deg, rgba(245, 245, 240, 0.9), rgba(255, 255, 255, 0.95));
+    color: #4b5563;
+}
+
+.news-skeleton {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.2rem;
+    background: linear-gradient(90deg, rgba(201, 169, 97, 0.18) 25%, rgba(255, 255, 255, 0.9) 50%, rgba(201, 169, 97, 0.18) 75%);
+    background-size: 200% 100%;
+    animation: news-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+.news-skeleton-title {
+    width: min(28rem, 85%);
+    height: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.news-skeleton-date {
+    width: 9rem;
+    height: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.news-skeleton-line {
+    width: 100%;
+    height: 1.1rem;
+    margin-bottom: 0.75rem;
+}
+
+.news-skeleton-line-short {
+    width: 72%;
+    margin-bottom: 0;
+}
+
+@keyframes news-skeleton-shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
 .gap-4 {
     --gap: 1rem;
 }
@@ -586,6 +658,53 @@ svg {
     display: none;
 }
 
+.solent-calendar-embed,
+.wessex-calendar-embed {
+    border: 1px solid #C9A961;
+    border-radius: 0.25rem;
+    background: #f5f5f0;
+    overflow: hidden;
+}
+
+.solent-calendar-mobile,
+.wessex-calendar-mobile {
+    display: block;
+}
+
+.solent-calendar-desktop,
+.wessex-calendar-desktop {
+    display: none;
+}
+
+.solent-calendar-frame,
+.wessex-calendar-frame {
+    position: relative;
+    width: 100%;
+    padding-top: 140%;
+}
+
+.solent-calendar-frame-mobile,
+.wessex-calendar-frame-mobile {
+    padding-top: 200%;
+}
+
+.solent-calendar-iframe,
+.wessex-calendar-iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.solent-events-main,
+.wessex-events-main {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 @media (max-width: 768px) {
     .md\:block {
         display: none;
@@ -655,6 +774,29 @@ svg {
     .calendar-tablet-only {
         display: block;
     }
+
+    .solent-calendar-mobile,
+    .wessex-calendar-mobile {
+        display: none;
+    }
+
+    .solent-calendar-desktop,
+    .wessex-calendar-desktop {
+        display: block;
+    }
+
+    .solent-events-main,
+    .wessex-events-main {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    .solent-calendar-frame,
+    .wessex-calendar-frame {
+        padding-top: 95%;
+    }
 }
 
 @media (min-width: 1024px) {
@@ -664,6 +806,11 @@ svg {
 
     .calendar-desktop-only {
         display: block;
+    }
+
+    .solent-calendar-frame,
+    .wessex-calendar-frame {
+        padding-top: 75%;
     }
 }
 

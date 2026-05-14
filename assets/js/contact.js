@@ -1,3 +1,5 @@
+import { CLOUDFLARE_PROXY_URL } from './config.js'
+
 export function initContactForm() {
     const forms = document.querySelectorAll('[data-remote-submit]')
     if (!forms.length) return
@@ -34,7 +36,7 @@ export function initContactForm() {
             feedback.className = 'form-feedback'
 
             try {
-                const response = await fetch('https://rose-croix-cloudflare-proxy.hantsiowrosecroix.workers.dev/', {
+                const response = await fetch(CLOUDFLARE_PROXY_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
