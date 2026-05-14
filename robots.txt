@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://marcel-dev-acc.github.io/rose-croix-hampshire-iow-wessex/sitemap.xml
