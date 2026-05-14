@@ -18,7 +18,7 @@ export function initContactForm() {
         submitBtn.textContent = 'Sending...'
 
         try {
-            const response = await fetch('https://your-worker.your-subdomain.workers.dev', {
+            const response = await fetch('https://rose-croix-cloudflare-proxy.hantsiowrosecroix.workers.dev/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
