@@ -697,8 +697,7 @@ svg {
     border: 0;
 }
 
-.solent-events-main,
-.wessex-events-main {
+main.container {
     padding-left: 0;
     padding-right: 0;
     padding-top: 0;
@@ -785,8 +784,7 @@ svg {
         display: block;
     }
 
-    .solent-events-main,
-    .wessex-events-main {
+    main.container {
         padding-left: 1rem;
         padding-right: 1rem;
         padding-top: 2rem;
