@@ -1121,7 +1121,18 @@ a:hover {
     font-weight: 600;
 }
 
+.form-field label.is-required::after {
+    content: " *";
+    color: var(--rc-maroon);
+}
+
+.label-optional {
+    font-weight: 400;
+    color: #6b7280;
+}
+
 .form-field input,
+.form-field select,
 .form-field textarea {
     width: 100%;
     max-width: 100%;
@@ -1134,6 +1145,7 @@ a:hover {
 }
 
 .form-field input:focus,
+.form-field select:focus,
 .form-field textarea:focus {
     outline: 2px solid rgba(107, 26, 26, 0.35);
     outline-offset: 1px;

@@ -225,16 +225,17 @@
                             style="font-family: 'Cinzel', serif;">General Inquiries</h3>
 
                         <p class="mb-4 leading-relaxed">
-                            For any other questions or comments about the District of Hampshire & Isle of Wight Wessex,
-                            please contact the District Recorder.
+                            For general questions or comments about the District of Hampshire & Isle of Wight Wessex,
+                            please complete the enquiry form below and your message will be directed to the appropriate
+                            person.
                         </p>
 
                         <div class="bg-white border border-gray-300 p-6 rounded">
                             <p class="mb-3 leading-relaxed">
                                 <strong>Please note:</strong> For privacy and security reasons, email addresses and
-                                phone numbers are not published on this website. All inquiries should be directed
-                                through official Masonic channels or by contacting the District Recorder through your
-                                own Lodge Secretary.
+                                phone numbers are not published on this website. The contact form below is the
+                                preferred way to submit an enquiry and ensures it reaches the appropriate office
+                                securely.
                             </p>
                             <p class="text-sm text-gray-600">
                                 If you are not a Freemason and are interested in joining Freemasonry, please visit the
@@ -243,28 +244,30 @@
                         </div>
 
                         <form class="contact-form" data-contact-form data-remote-submit novalidate>
-                            <p class="mb-4 leading-relaxed">
-                                You can draft your inquiry below. This form provides on-page validation only.
-                            </p>
 
                             <input type="hidden" name="subject" value="General enquiry">
 
                             <div class="form-grid">
                                 <div class="form-field">
-                                    <label for="contact-name">Full name</label>
+                                    <label for="contact-name" class="is-required">Full name</label>
                                     <input id="contact-name" name="name" type="text" autocomplete="name" required>
                                     <p class="form-error" data-error-for="name" aria-live="polite"></p>
                                 </div>
 
                                 <div class="form-field">
-                                    <label for="contact-email">Email address</label>
+                                    <label for="contact-email" class="is-required">Email address</label>
                                     <input id="contact-email" name="email" type="email" autocomplete="email" required>
                                     <p class="form-error" data-error-for="email" aria-live="polite"></p>
                                 </div>
 
                                 <div class="form-field">
-                                    <label for="contact-message">Message</label>
-                                    <textarea id="contact-message" name="message" rows="5" required></textarea>
+                                    <label for="contact-phone">Phone number <span class="label-optional">(optional)</span></label>
+                                    <input id="contact-phone" name="phone" type="tel" autocomplete="tel">
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="contact-message" class="is-required">Message</label>
+                                    <textarea id="contact-message" name="message" rows="5" maxlength="750" required></textarea>
                                     <p class="form-error" data-error-for="message" aria-live="polite"></p>
                                 </div>
                             </div>
