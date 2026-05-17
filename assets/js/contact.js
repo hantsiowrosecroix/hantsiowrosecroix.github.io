@@ -16,6 +16,8 @@ export function initContactForm() {
             const submitBtn = form.querySelector('button[type="submit"]')
             const nameField = form.querySelector('[name="name"]')
             const emailField = form.querySelector('[name="email"]')
+            const phoneField = form.querySelector('[name="phone"]')
+            const chapterField = form.querySelector('[name="chapter"]')
             const messageField = form.querySelector('[name="message"]')
             const subjectField = form.querySelector('[name="subject"]')
 
@@ -26,7 +28,10 @@ export function initContactForm() {
             const data = {
                 name: nameField.value.trim(),
                 email: emailField.value.trim(),
-                message: messageField.value.trim(),
+                phone: phoneField ? phoneField.value.trim() : '',
+                message: chapterField && chapterField.value.trim()
+                    ? `Chapter: ${chapterField.value.trim()}\n\n${messageField.value.trim()}`
+                    : messageField.value.trim(),
                 subject: subjectField.value.trim()
             }
 

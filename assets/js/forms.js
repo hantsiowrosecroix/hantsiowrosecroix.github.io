@@ -2,6 +2,15 @@ function isValidEmail(value) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
+const MESSAGE_MAX_LENGTH = 750;
+
+function buildSubmittedMessage(chapterValue, messageValue) {
+    const chapter = chapterValue?.trim() ?? '';
+    const message = messageValue?.trim() ?? '';
+
+    return chapter ? `Chapter: ${chapter}\n\n${message}` : message;
+}
+
 export function initForms() {
     const forms = document.querySelectorAll('[data-contact-form]');
 
@@ -9,6 +18,7 @@ export function initForms() {
         const fields = {
             name: form.querySelector('[name="name"]'),
             email: form.querySelector('[name="email"]'),
+            chapter: form.querySelector('[name="chapter"]'),
             message: form.querySelector('[name="message"]'),
         };
 
@@ -59,8 +69,18 @@ export function initForms() {
                 hasError = true;
             }
 
+            const submittedMessage = buildSubmittedMessage(fields.chapter?.value, fields.message?.value);
+
             if (!fields.message?.value.trim()) {
                 setError('message', 'Please enter a short message.');
+                hasError = true;
+            } else if (submittedMessage.length > MESSAGE_MAX_LENGTH) {
+                setError('message', `Please keep your message to ${MESSAGE_MAX_LENGTH} characters or fewer.`);
+                hasError = true;
+            }
+
+            if (fields.chapter && !fields.chapter.value.trim()) {
+                setError('chapter', 'Please select a chapter.');
                 hasError = true;
             }
 
