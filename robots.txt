@@ -1,3 +1,20 @@
+# Robots.txt for District of Hampshire & Isle of Wight Wessex - Rose Croix
+# https://www.hantsiowrosecroix.org.uk/
+
+# Allow all search engines to crawl the site
 User-agent: *
 Disallow:
-Sitemap: https://marcel-dev-acc.github.io/rose-croix-hampshire-iow-wessex/sitemap.xml
+
+# Sitemap location
+Sitemap: https://www.hantsiowrosecroix.org.uk/sitemap.xml
+
+# Crawl delay for politeness (optional - 1 second)
+# Uncomment if you experience server load issues
+# Crawl-delay: 1
+
+# Specific bot directives (optional)
+# User-agent: Googlebot
+# Allow: /
+
+# User-agent: Bingbot
+# Allow: /

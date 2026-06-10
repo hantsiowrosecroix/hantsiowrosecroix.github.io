@@ -72,6 +72,34 @@ header nav li.group.is-open>a .rc-nav-link-chevron {
     transform: translateY(1px) rotate(180deg);
 }
 
+/* Breadcrumb Navigation Styles */
+nav[aria-label="Breadcrumb"] ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav[aria-label="Breadcrumb"] li {
+    display: inline;
+}
+
+/* Mobile breadcrumb styles */
+@media (max-width: 768px) {
+    nav[aria-label="Breadcrumb"] {
+        font-size: 0.75rem; /* 12px */
+    }
+    
+    nav[aria-label="Breadcrumb"] ol {
+        gap: 0.25rem;
+    }
+    
+    /* Reduce padding on breadcrumb container for mobile */
+    .bg-\[\#f5f5f0\] nav[aria-label="Breadcrumb"] {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
 img,
 svg {
     max-width: 100%;
@@ -750,6 +778,12 @@ main.container {
 
     footer .text-gray-400 {
         display: none;
+    }
+    
+    /* Reduce breadcrumb container padding on mobile */
+    .bg-\[\#f5f5f0\].border-b .container {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
     }
 }
 
