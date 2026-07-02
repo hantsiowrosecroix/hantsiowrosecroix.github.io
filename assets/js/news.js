@@ -118,7 +118,7 @@ export async function initNews() {
     renderSkeletons(latestTarget, oldTarget);
 
     try {
-        const response = await fetch(CLOUDFLARE_PROXY_URL, {
+        const response = await fetch(`${CLOUDFLARE_PROXY_URL}news`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json'

@@ -41,7 +41,7 @@ export function initContactForm() {
             feedback.className = 'form-feedback'
 
             try {
-                const response = await fetch(CLOUDFLARE_PROXY_URL, {
+                const response = await fetch(`${CLOUDFLARE_PROXY_URL}contact`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
