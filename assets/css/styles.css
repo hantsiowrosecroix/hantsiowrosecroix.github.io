@@ -1217,6 +1217,11 @@ a:hover {
     background: #5a1515;
 }
 
+.button-primary:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
 .form-feedback {
     font-size: 0.875rem;
 }
@@ -1227,4 +1232,22 @@ a:hover {
 
 .form-feedback-error {
     color: #9f1239;
+}
+
+.auth-step {
+    scroll-margin-top: 1.5rem;
+    transition: opacity 0.35s ease, transform 0.35s ease, max-height 0.35s ease,
+        padding 0.35s ease, margin-top 0.35s ease, border-width 0.35s ease;
+    overflow: hidden;
+}
+
+.auth-step.is-concealed {
+    opacity: 0;
+    transform: translateY(1rem);
+    max-height: 0;
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-width: 0;
+    pointer-events: none;
 }
