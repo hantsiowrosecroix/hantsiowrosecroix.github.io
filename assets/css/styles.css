@@ -1057,7 +1057,43 @@ a:hover {
     display: block !important;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1300px) and (min-width: 1253px) {
+    header nav>div>ul>li>a.text-sm {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 1252px) {
+    header nav>div>ul>li>a.text-sm {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 1160px) {
+    header nav>div>ul>li>a.text-sm {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 1115px) {
+    header nav>div>ul>li>a.text-sm {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 1070px) {
+    header nav>div>ul>li>a.text-sm {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 1025px) {
+    header nav>div>ul>li>a.text-sm {
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 975px) {
     header nav li.group>a .rc-nav-link-chevron {
         display: none;
     }
@@ -1222,6 +1258,39 @@ a:hover {
     cursor: wait;
 }
 
+.button-secondary,
+.button-danger {
+    border-radius: 0.25rem;
+    padding: 0.55rem 1rem;
+    cursor: pointer;
+}
+
+.button-secondary {
+    background: #fff;
+    border: 1px solid #6b1a1a;
+    color: #6b1a1a;
+}
+
+.button-secondary:hover {
+    background: #fff7f5;
+}
+
+.button-danger {
+    background: #9f1239;
+    border: 1px solid #881337;
+    color: #fff;
+}
+
+.button-danger:hover {
+    background: #881337;
+}
+
+.button-secondary:disabled,
+.button-danger:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
 .form-feedback {
     font-size: 0.875rem;
 }
@@ -1232,6 +1301,255 @@ a:hover {
 
 .form-feedback-error {
     color: #9f1239;
+}
+
+.is-hidden {
+    display: none !important;
+}
+
+.events-form-shell {
+    border-left: 4px solid transparent;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.events-form-shell.is-editing {
+    background: #fffaf0;
+    border-left-color: #c9a961;
+}
+
+.events-form-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.events-form-mode {
+    margin: 0 0 0.25rem;
+    color: #6b1a1a;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.events-form-summary {
+    margin: 0.35rem 0 0;
+    color: #4b5563;
+    font-size: 0.95rem;
+}
+
+.events-list-stack {
+    display: grid;
+    gap: 1rem;
+}
+
+.events-list-section {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    background: #fffdfa;
+}
+
+.events-section-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.9rem;
+}
+
+.events-table-wrapper {
+    overflow-x: auto;
+}
+
+.events-manage-table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: collapse;
+}
+
+.events-manage-table thead th {
+    padding: 0.75rem;
+    border-bottom: 1px solid #d1d5db;
+    background: #f8f5ec;
+    color: #6b7280;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.events-manage-table tbody td {
+    padding: 0.85rem 0.75rem;
+    border-top: 1px solid #e5e7eb;
+    vertical-align: top;
+}
+
+.events-manage-table tbody tr:hover {
+    background: rgba(201, 169, 97, 0.06);
+}
+
+.events-manage-table tbody tr:first-child td {
+    border-top: 0;
+}
+
+.event-title-text {
+    color: #6b1a1a;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.event-meta-text {
+    margin-top: 0.3rem;
+    color: #6b7280;
+    font-size: 0.85rem;
+}
+
+.event-description-text {
+    margin-top: 0.45rem;
+    color: #374151;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.event-date-text {
+    color: #111827;
+    font-size: 0.95rem;
+    line-height: 1.45;
+}
+
+.events-empty-row td,
+.events-error-row td {
+    color: #6b7280;
+    font-style: italic;
+}
+
+.events-error-row td {
+    color: #9f1239;
+}
+
+.events-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.event-action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid #d1d5db;
+    border-radius: 999px;
+    background: #fff;
+    color: #6b1a1a;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.event-action-button:hover {
+    background: #fff7f5;
+    border-color: #c9a961;
+}
+
+.event-action-button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.event-action-button svg {
+    width: 1rem;
+    height: 1rem;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.event-action-delete {
+    color: #9f1239;
+}
+
+.events-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 100;
+}
+
+.events-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.55);
+}
+
+.events-modal-panel {
+    position: relative;
+    width: min(100%, 32rem);
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+    background: #fffdf9;
+    box-shadow: 0 24px 60px rgba(17, 24, 39, 0.2);
+}
+
+.events-modal-open {
+    overflow: hidden;
+}
+
+@media (max-width: 767px) {
+    .events-form-header,
+    .events-section-header {
+        flex-direction: column;
+    }
+
+    .events-manage-table {
+        min-width: 0;
+    }
+
+    .events-manage-table thead {
+        display: none;
+    }
+
+    .events-manage-table,
+    .events-manage-table tbody,
+    .events-manage-table tr,
+    .events-manage-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .events-manage-table tbody tr {
+        padding: 0.8rem 0;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .events-manage-table tbody tr:first-child {
+        border-top: 0;
+    }
+
+    .events-manage-table tbody td {
+        padding: 0.35rem 0;
+        border-top: 0;
+    }
+
+    .events-manage-table tbody td::before {
+        content: attr(data-label);
+        display: block;
+        margin-bottom: 0.2rem;
+        color: #6b7280;
+        font-size: 0.74rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
 }
 
 .auth-step {
