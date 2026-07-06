@@ -699,6 +699,14 @@ svg {
     display: block;
 }
 
+.solent-calendar-tablet {
+    display: none;
+}
+
+.wessex-calendar-tablet {
+    display: none;
+}
+
 .solent-calendar-desktop,
 .wessex-calendar-desktop {
     display: none;
@@ -714,6 +722,14 @@ svg {
 .solent-calendar-frame-mobile,
 .wessex-calendar-frame-mobile {
     padding-top: 200%;
+}
+
+.solent-calendar-frame-tablet {
+    padding-top: 133.333%;
+}
+
+.wessex-calendar-frame-tablet {
+    padding-top: 133.333%;
 }
 
 .solent-calendar-iframe,
@@ -813,9 +829,17 @@ main.container {
         display: none;
     }
 
+    .solent-calendar-tablet {
+        display: block;
+    }
+
+    .wessex-calendar-tablet {
+        display: block;
+    }
+
     .solent-calendar-desktop,
     .wessex-calendar-desktop {
-        display: block;
+        display: none;
     }
 
     main.container {
@@ -837,6 +861,19 @@ main.container {
     }
 
     .calendar-desktop-only {
+        display: block;
+    }
+
+    .solent-calendar-tablet {
+        display: none;
+    }
+
+    .wessex-calendar-tablet {
+        display: none;
+    }
+
+    .solent-calendar-desktop,
+    .wessex-calendar-desktop {
         display: block;
     }
 
