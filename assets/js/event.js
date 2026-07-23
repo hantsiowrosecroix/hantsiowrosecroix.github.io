@@ -2,6 +2,7 @@ import { CLOUDFLARE_PROXY_URL } from './config.js'
 
 const EVENTS_ENDPOINT = 'event'
 const DISTRICT_CALENDAR_NAMES = ['Rose Croix Wessex', 'Rose Croix Solent']
+const DEFAULT_TABLE_PAGE_SIZE = 5
 const dateTimeFormatter = new Intl.DateTimeFormat('en-GB', {
     dateStyle: 'medium',
     timeStyle: 'short'
@@ -54,6 +55,16 @@ async function parseJson(response) {
     } catch {
         return null
     }
+}
+
+function getUnexpectedResponseErrorMessage(response) {
+    const contentType = response?.headers?.get('content-type') || ''
+
+    if (contentType.toLowerCase().includes('text/html')) {
+        return 'The server returned an unexpected page. Please refresh the page and try again.'
+    }
+
+    return 'The server returned an unexpected response. Please refresh the page and try again.'
 }
 
 function getSessionData() {
@@ -136,6 +147,10 @@ async function requestJson(endpoint, options = {}) {
     })
 
     const result = await parseJson(response)
+
+    if (result === null) {
+        throw new Error(getUnexpectedResponseErrorMessage(response))
+    }
 
     if (!response.ok || result?.ok === false) {
         throw new Error(result?.error || result?.message || `Server responded with ${response.status}`)
@@ -364,6 +379,58 @@ function createTableCell(label, content) {
     return cell
 }
 
+function createSkeletonBlock(className) {
+    const block = document.createElement('div')
+    block.className = `news-skeleton ${className}`.trim()
+    block.setAttribute('aria-hidden', 'true')
+    return block
+}
+
+function createEventSkeletonRow() {
+    const row = document.createElement('tr')
+    row.className = 'manage-table-skeleton-row'
+    row.setAttribute('aria-hidden', 'true')
+
+    const details = document.createElement('div')
+    details.className = 'manage-table-skeleton-stack'
+    details.append(
+        createSkeletonBlock('manage-table-skeleton-title'),
+        createSkeletonBlock('manage-table-skeleton-meta'),
+        createSkeletonBlock('manage-table-skeleton-line'),
+        createSkeletonBlock('manage-table-skeleton-line manage-table-skeleton-line-short')
+    )
+
+    const starts = createSkeletonBlock('manage-table-skeleton-date')
+    const ends = createSkeletonBlock('manage-table-skeleton-date')
+
+    const actions = document.createElement('div')
+    actions.className = 'manage-table-skeleton-actions'
+    actions.append(
+        createSkeletonBlock('manage-table-skeleton-action'),
+        createSkeletonBlock('manage-table-skeleton-action')
+    )
+
+    row.appendChild(createTableCell('Event', details))
+    row.appendChild(createTableCell('Starts', starts))
+    row.appendChild(createTableCell('Ends', ends))
+    row.appendChild(createTableCell('Actions', actions))
+
+    return row
+}
+
+function renderEventSkeletonRows(container, count) {
+    container.replaceChildren()
+
+    const fragment = document.createDocumentFragment()
+    const rowCount = Math.max(count || DEFAULT_TABLE_PAGE_SIZE, 1)
+
+    for (let index = 0; index < rowCount; index += 1) {
+        fragment.appendChild(createEventSkeletonRow())
+    }
+
+    container.appendChild(fragment)
+}
+
 function createEventRow(eventItem, handlers) {
     const row = document.createElement('tr')
     row.dataset.eventId = eventItem.id
@@ -446,40 +513,162 @@ function renderTableMessage(container, message, rowClassName) {
     container.appendChild(row)
 }
 
-function renderCalendarEvents(container, events, calendarName, handlers) {
-    container.replaceChildren()
+function normalizeSearchTerm(value) {
+    return String(value ?? '').trim().toLowerCase()
+}
 
-    if (!events.length) {
-        renderTableMessage(container, `No events found for ${calendarName}.`, 'events-empty-row')
+function clampPageNumber(currentPage, totalPages) {
+    return Math.min(Math.max(currentPage || 1, 1), Math.max(totalPages, 1))
+}
+
+function getPaginatedItems(items, currentPage, pageSize) {
+    const safePageSize = pageSize || DEFAULT_TABLE_PAGE_SIZE
+    const totalPages = Math.max(1, Math.ceil(items.length / safePageSize))
+    const safeCurrentPage = clampPageNumber(currentPage, totalPages)
+    const startIndex = (safeCurrentPage - 1) * safePageSize
+
+    return {
+        pageItems: items.slice(startIndex, startIndex + safePageSize),
+        currentPage: safeCurrentPage,
+        pageSize: safePageSize,
+        totalPages,
+        startIndex
+    }
+}
+
+function updateTableControls(controls, options) {
+    if (!controls) {
         return
     }
+
+    const {
+        searchTerm = '',
+        pageSize = DEFAULT_TABLE_PAGE_SIZE,
+        currentPage = 1,
+        totalPages = 1,
+        totalItems = 0,
+        visibleStart = 0,
+        visibleEnd = 0,
+        itemLabel = 'items',
+        loading = false
+    } = options
+
+    if (controls.searchField) {
+        controls.searchField.value = searchTerm
+    }
+
+    if (controls.pageSizeField) {
+        controls.pageSizeField.value = String(pageSize)
+    }
+
+    if (controls.paginationStatus) {
+        controls.paginationStatus.textContent = loading
+            ? `Loading ${itemLabel}...`
+            : totalItems
+            ? `Showing ${visibleStart}-${visibleEnd} of ${totalItems} ${itemLabel} • Page ${currentPage} of ${totalPages}`
+            : `Showing 0 ${itemLabel}`
+    }
+
+    if (controls.prevButton) {
+        controls.prevButton.disabled = loading || currentPage <= 1 || totalItems === 0
+    }
+
+    if (controls.nextButton) {
+        controls.nextButton.disabled = loading || currentPage >= totalPages || totalItems === 0
+    }
+}
+
+function getEventTableViewState(state, calendarName) {
+    if (!state.tableViewsByCalendar.has(calendarName)) {
+        state.tableViewsByCalendar.set(calendarName, {
+            searchTerm: '',
+            pageSize: DEFAULT_TABLE_PAGE_SIZE,
+            currentPage: 1
+        })
+    }
+
+    return state.tableViewsByCalendar.get(calendarName)
+}
+
+function renderCalendarEvents(container, events, calendarName, handlers, controls, viewState) {
+    container.replaceChildren()
 
     const sortedEvents = [...events].sort((leftEvent, rightEvent) => {
         const leftDate = parseDateValue(leftEvent.startDateTime)?.getTime() || 0
         const rightDate = parseDateValue(rightEvent.startDateTime)?.getTime() || 0
         return leftDate - rightDate
     })
+    const normalizedSearchTerm = normalizeSearchTerm(viewState?.searchTerm)
+    const filteredEvents = normalizedSearchTerm
+        ? sortedEvents.filter((eventItem) => normalizeSearchTerm(eventItem.title).includes(normalizedSearchTerm))
+        : sortedEvents
+    const pagination = getPaginatedItems(filteredEvents, viewState?.currentPage, viewState?.pageSize)
+
+    if (viewState) {
+        viewState.currentPage = pagination.currentPage
+    }
+
+    if (!filteredEvents.length) {
+        renderTableMessage(
+            container,
+            normalizedSearchTerm
+                ? `No events match "${viewState.searchTerm}" for ${calendarName}.`
+                : `No events found for ${calendarName}.`,
+            'events-empty-row'
+        )
+        updateTableControls(controls, {
+            searchTerm: viewState?.searchTerm,
+            pageSize: pagination.pageSize,
+            currentPage: pagination.currentPage,
+            totalPages: pagination.totalPages,
+            totalItems: 0,
+            visibleStart: 0,
+            visibleEnd: 0,
+            itemLabel: 'events'
+        })
+        return
+    }
 
     const fragment = document.createDocumentFragment()
 
-    sortedEvents.forEach((eventItem) => {
+    pagination.pageItems.forEach((eventItem) => {
         fragment.appendChild(createEventRow(eventItem, handlers))
     })
 
     container.appendChild(fragment)
+    updateTableControls(controls, {
+        searchTerm: viewState?.searchTerm,
+        pageSize: pagination.pageSize,
+        currentPage: pagination.currentPage,
+        totalPages: pagination.totalPages,
+        totalItems: filteredEvents.length,
+        visibleStart: pagination.startIndex + 1,
+        visibleEnd: pagination.startIndex + pagination.pageItems.length,
+        itemLabel: 'events'
+    })
 }
 
-async function loadCalendarEvents(statusElement, listContainers, state, handlers) {
+async function loadCalendarEvents(statusElement, listContainers, controlsByCalendar, state, handlers) {
     setFeedback(statusElement, '', 'Loading calendar events...')
 
     for (const calendarName of DISTRICT_CALENDAR_NAMES) {
         const listContainer = listContainers.get(calendarName)
+        const controls = controlsByCalendar.get(calendarName)
 
         if (!listContainer) {
             continue
         }
 
-        renderTableMessage(listContainer, 'Loading events...', 'events-empty-row')
+        renderEventSkeletonRows(listContainer, getEventTableViewState(state, calendarName).pageSize)
+        updateTableControls(controls, {
+            searchTerm: getEventTableViewState(state, calendarName).searchTerm,
+            pageSize: getEventTableViewState(state, calendarName).pageSize,
+            totalItems: 0,
+            visibleStart: 0,
+            visibleEnd: 0,
+            itemLabel: 'events',
+            loading: true
+        })
     }
 
     const results = await Promise.allSettled(
@@ -499,7 +688,14 @@ async function loadCalendarEvents(statusElement, listContainers, state, handlers
         if (result.status === 'fulfilled') {
             const events = getEventCollection(result.value).map((eventItem) => normalizeEvent(eventItem, calendarName))
             state.eventsByCalendar.set(calendarName, events)
-            renderCalendarEvents(listContainer, events, calendarName, handlers)
+            renderCalendarEvents(
+                listContainer,
+                events,
+                calendarName,
+                handlers,
+                controlsByCalendar.get(calendarName),
+                getEventTableViewState(state, calendarName)
+            )
             return
         }
 
@@ -510,6 +706,14 @@ async function loadCalendarEvents(statusElement, listContainers, state, handlers
             result.reason?.message || `Unable to load events for ${calendarName}.`,
             'events-error-row'
         )
+        updateTableControls(controlsByCalendar.get(calendarName), {
+            searchTerm: getEventTableViewState(state, calendarName).searchTerm,
+            pageSize: getEventTableViewState(state, calendarName).pageSize,
+            totalItems: 0,
+            visibleStart: 0,
+            visibleEnd: 0,
+            itemLabel: 'events'
+        })
     })
 
     setFeedback(
@@ -627,6 +831,18 @@ export function initManageEvents() {
             document.querySelector(`[data-events-list="${calendarName}"]`)
         ])
     )
+    const controlsByCalendar = new Map(
+        DISTRICT_CALENDAR_NAMES.map((calendarName) => [
+            calendarName,
+            {
+                searchField: document.querySelector(`[data-events-search="${calendarName}"]`),
+                pageSizeField: document.querySelector(`[data-events-page-size="${calendarName}"]`),
+                paginationStatus: document.querySelector(`[data-events-pagination-status="${calendarName}"]`),
+                prevButton: document.querySelector(`[data-events-prev-page="${calendarName}"]`),
+                nextButton: document.querySelector(`[data-events-next-page="${calendarName}"]`)
+            }
+        ])
+    )
 
     const elements = {
         createForm,
@@ -675,11 +891,12 @@ export function initManageEvents() {
         editingEvent: null,
         deletingEvent: null,
         deleteTriggerElement: null,
-        eventsByCalendar: new Map()
+        eventsByCalendar: new Map(),
+        tableViewsByCalendar: new Map()
     }
 
     const refreshEvents = async () => {
-        await loadCalendarEvents(eventsStatus, listContainers, state, {
+        await loadCalendarEvents(eventsStatus, listContainers, controlsByCalendar, state, {
             onEdit: (eventItem) => {
                 clearEventFormValidation(createForm, formFeedback, deleteFeedback)
                 setEditMode(state, elements, eventItem)
@@ -692,6 +909,52 @@ export function initManageEvents() {
 
     clearEventFormValidation(createForm, formFeedback, deleteFeedback)
     setCreateMode(state, elements)
+
+    DISTRICT_CALENDAR_NAMES.forEach((calendarName) => {
+        const controls = controlsByCalendar.get(calendarName)
+        const viewState = getEventTableViewState(state, calendarName)
+        const rerenderCalendar = () => {
+            const events = state.eventsByCalendar.get(calendarName) || []
+            const listContainer = listContainers.get(calendarName)
+
+            if (!listContainer) {
+                return
+            }
+
+            renderCalendarEvents(listContainer, events, calendarName, {
+                onEdit: (eventItem) => {
+                    clearEventFormValidation(createForm, formFeedback, deleteFeedback)
+                    setEditMode(state, elements, eventItem)
+                },
+                onDelete: (eventItem, triggerElement) => {
+                    openDeleteModal(state, elements, eventItem, triggerElement)
+                }
+            }, controls, viewState)
+        }
+
+        controls?.searchField?.addEventListener('input', () => {
+            viewState.searchTerm = controls.searchField.value.trim()
+            viewState.currentPage = 1
+            rerenderCalendar()
+        })
+
+        controls?.pageSizeField?.addEventListener('change', () => {
+            const parsedPageSize = Number.parseInt(controls.pageSizeField.value, 10)
+            viewState.pageSize = Number.isInteger(parsedPageSize) ? parsedPageSize : DEFAULT_TABLE_PAGE_SIZE
+            viewState.currentPage = 1
+            rerenderCalendar()
+        })
+
+        controls?.prevButton?.addEventListener('click', () => {
+            viewState.currentPage -= 1
+            rerenderCalendar()
+        })
+
+        controls?.nextButton?.addEventListener('click', () => {
+            viewState.currentPage += 1
+            rerenderCalendar()
+        })
+    })
 
     createForm.addEventListener('submit', async (event) => {
         event.preventDefault()

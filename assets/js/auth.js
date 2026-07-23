@@ -47,6 +47,16 @@ async function parseJson(response) {
     }
 }
 
+function getUnexpectedResponseErrorMessage(response) {
+    const contentType = response?.headers?.get('content-type') || ''
+
+    if (contentType.toLowerCase().includes('text/html')) {
+        return 'The server returned an unexpected page. Please refresh the page and try again.'
+    }
+
+    return 'The server returned an unexpected response. Please refresh the page and try again.'
+}
+
 async function postJson(endpoint, payload) {
     const response = await fetch(`${CLOUDFLARE_PROXY_URL}${endpoint}`, {
         method: 'POST',
@@ -55,6 +65,10 @@ async function postJson(endpoint, payload) {
     })
 
     const result = await parseJson(response)
+
+    if (result === null) {
+        throw new Error(getUnexpectedResponseErrorMessage(response))
+    }
 
     if (!response.ok || result?.ok === false) {
         throw new Error(result?.error || result?.message || `Server responded with ${response.status}`)

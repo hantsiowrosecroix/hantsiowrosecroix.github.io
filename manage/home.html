@@ -152,12 +152,147 @@
                     <h2 class="text-3xl mb-6" style="font-family: 'Cinzel', serif;">Administration Home</h2>
 
                     <p class="mb-8 leading-relaxed">
-                        This management area is the starting point for maintaining site content. From here, you will
-                        be able to <s>create a new news article and</s> (COMING SOON) manage calendar events for the Solent and Wessex
+                        This management area is the starting point for maintaining site content. From here, you can
+                        create, update, and remove both news articles and calendar events for the Solent and Wessex
                         Districts.
                     </p>
 
                     <div class="space-y-6">
+                        <section class="bg-white py-6 shadow-sm">
+                            <h3 class="text-2xl mb-3 text-[#6b1a1a]" style="font-family: 'Cinzel', serif;">Latest News</h3>
+                            <p class="mb-4 leading-relaxed text-gray-700">
+                                Create new news articles, edit existing articles, and remove entries that should no
+                                longer appear on the public Latest News page.
+                            </p>
+
+                            <div style="display: grid; gap: 1.5rem;">
+                                <form class="contact-form events-form-shell" data-news-create-form novalidate>
+                                    <div class="events-form-header">
+                                        <div>
+                                            <p class="events-form-mode" data-news-form-mode>Create</p>
+                                            <h4 class="text-xl text-[#6b1a1a]" style="font-family: 'Cinzel', serif;" data-news-form-title>Create a news article</h4>
+                                            <p class="events-form-summary" data-news-form-summary>
+                                                Use this form to add a new article to the Latest News page.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" name="newsId">
+
+                                    <div class="form-grid">
+                                        <div class="form-field">
+                                            <label for="manage-news-title" class="is-required">Title</label>
+                                            <input id="manage-news-title" name="title" type="text" required>
+                                            <p class="form-error" data-error-for="title" aria-live="polite"></p>
+                                        </div>
+
+                                        <div class="form-field">
+                                            <label for="manage-news-month" class="is-required">Article Display Month</label>
+                                            <select id="manage-news-month" name="month" required>
+                                                <option value="January">January</option>
+                                                <option value="February">February</option>
+                                                <option value="March">March</option>
+                                                <option value="April">April</option>
+                                                <option value="May">May</option>
+                                                <option value="June">June</option>
+                                                <option value="July">July</option>
+                                                <option value="August">August</option>
+                                                <option value="September">September</option>
+                                                <option value="October">October</option>
+                                                <option value="November">November</option>
+                                                <option value="December">December</option>
+                                            </select>
+                                            <p class="form-error" data-error-for="month" aria-live="polite"></p>
+                                        </div>
+
+                                        <div class="form-field">
+                                            <label for="manage-news-year" class="is-required">Article Display Year</label>
+                                            <input id="manage-news-year" name="year" type="number" min="1900" max="2999" inputmode="numeric" required>
+                                            <p class="form-error" data-error-for="year" aria-live="polite"></p>
+                                        </div>
+
+                                        <div class="form-field">
+                                            <label for="manage-news-expire-on" class="is-required">Expire on</label>
+                                            <input id="manage-news-expire-on" name="expire_on" type="date" required>
+                                            <p class="form-error" data-error-for="expire_on" aria-live="polite"></p>
+                                        </div>
+
+                                        <div class="form-field" style="grid-column: 1 / -1;">
+                                            <label for="manage-news-body" class="is-required">News article</label>
+                                            <textarea id="manage-news-body" name="news" rows="6" required></textarea>
+                                            <p class="form-error" data-error-for="news" aria-live="polite"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <button type="submit" class="button-primary" data-news-submit>Create article</button>
+                                        <button type="button" class="button-secondary is-hidden" data-news-cancel-edit>Cancel edit</button>
+                                        <p class="form-feedback" data-form-feedback aria-live="polite"></p>
+                                    </div>
+                                </form>
+
+                                <div class="flex flex-col gap-3">
+                                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                                        <h4 class="text-xl text-[#6b1a1a]" style="font-family: 'Cinzel', serif;">Current News Articles</h4>
+                                        <button type="button" class="button-primary" data-news-refresh>Refresh articles</button>
+                                    </div>
+                                    <p class="form-feedback" data-news-status aria-live="polite"></p>
+
+                                    <div class="events-list-stack">
+                                        <section class="events-list-section">
+                                            <div class="events-section-header">
+                                                <div>
+                                                    <h5 class="text-lg text-[#6b1a1a]" style="font-family: 'Cinzel', serif;">Published Articles</h5>
+                                                    <p class="text-sm text-gray-600 mt-1">Use the edit and delete controls to manage the articles returned by the news endpoint.</p>
+                                                </div>
+                                            </div>
+                                            <div class="manage-table-toolbar">
+                                                <div class="manage-table-search">
+                                                    <label class="manage-table-label" for="manage-news-search">Filter by title</label>
+                                                    <div class="manage-table-search-field">
+                                                        <span class="manage-table-search-icon" aria-hidden="true">⌕</span>
+                                                        <input id="manage-news-search" class="manage-table-input" type="search" placeholder="Search article titles" data-news-search>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="events-table-wrapper">
+                                                <table class="events-manage-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Article</th>
+                                                            <th scope="col">Published</th>
+                                                            <th scope="col">Expires</th>
+                                                            <th scope="col">Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-news-list></tbody>
+                                                </table>
+                                            </div>
+                                            <div class="manage-table-pagination">
+                                                <p class="manage-table-status" data-news-pagination-status aria-live="polite"></p>
+                                                <div class="manage-table-pagination-controls">
+                                                    <div class="manage-table-page-size">
+                                                        <label class="manage-table-label" for="manage-news-page-size">Rows</label>
+                                                        <div class="manage-table-select-shell">
+                                                            <select id="manage-news-page-size" class="manage-table-select" data-news-page-size>
+                                                                <option value="5" selected>5</option>
+                                                                <option value="10">10</option>
+                                                                <option value="15">15</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="manage-table-pagination-actions">
+                                                    <button type="button" class="manage-table-pagination-button" data-news-prev-page>Previous</button>
+                                                    <button type="button" class="manage-table-pagination-button" data-news-next-page>Next</button>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
                         <section class="bg-white py-6 shadow-sm">
                             <h3 class="text-2xl mb-3 text-[#6b1a1a]" style="font-family: 'Cinzel', serif;">Calendar Events</h3>
                             <p class="mb-4 leading-relaxed text-gray-700">
@@ -240,6 +375,15 @@
                                                     <p class="text-sm text-gray-600 mt-1">Wessex events are listed first for day-to-day management.</p>
                                                 </div>
                                             </div>
+                                            <div class="manage-table-toolbar">
+                                                <div class="manage-table-search">
+                                                    <label class="manage-table-label" for="manage-events-search-wessex">Filter by title</label>
+                                                    <div class="manage-table-search-field">
+                                                        <span class="manage-table-search-icon" aria-hidden="true">⌕</span>
+                                                        <input id="manage-events-search-wessex" class="manage-table-input" type="search" placeholder="Search event titles" data-events-search="Rose Croix Wessex">
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="events-table-wrapper">
                                                 <table class="events-manage-table">
                                                     <thead>
@@ -253,6 +397,25 @@
                                                     <tbody data-events-list="Rose Croix Wessex"></tbody>
                                                 </table>
                                             </div>
+                                            <div class="manage-table-pagination">
+                                                <p class="manage-table-status" data-events-pagination-status="Rose Croix Wessex" aria-live="polite"></p>
+                                                <div class="manage-table-pagination-controls">
+                                                    <div class="manage-table-page-size">
+                                                        <label class="manage-table-label" for="manage-events-page-size-wessex">Rows</label>
+                                                        <div class="manage-table-select-shell">
+                                                            <select id="manage-events-page-size-wessex" class="manage-table-select" data-events-page-size="Rose Croix Wessex">
+                                                                <option value="5" selected>5</option>
+                                                                <option value="10">10</option>
+                                                                <option value="15">15</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="manage-table-pagination-actions">
+                                                    <button type="button" class="manage-table-pagination-button" data-events-prev-page="Rose Croix Wessex">Previous</button>
+                                                    <button type="button" class="manage-table-pagination-button" data-events-next-page="Rose Croix Wessex">Next</button>
+                                                </div>
+                                            </div>
                                         </section>
 
                                         <section class="events-list-section">
@@ -260,6 +423,15 @@
                                                 <div>
                                                     <h5 class="text-lg text-[#6b1a1a]" style="font-family: 'Cinzel', serif;">Rose Croix Solent</h5>
                                                     <p class="text-sm text-gray-600 mt-1">Manage Solent events below using the same edit and delete controls.</p>
+                                                </div>
+                                            </div>
+                                            <div class="manage-table-toolbar">
+                                                <div class="manage-table-search">
+                                                    <label class="manage-table-label" for="manage-events-search-solent">Filter by title</label>
+                                                    <div class="manage-table-search-field">
+                                                        <span class="manage-table-search-icon" aria-hidden="true">⌕</span>
+                                                        <input id="manage-events-search-solent" class="manage-table-input" type="search" placeholder="Search event titles" data-events-search="Rose Croix Solent">
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="events-table-wrapper">
@@ -274,6 +446,25 @@
                                                     </thead>
                                                     <tbody data-events-list="Rose Croix Solent"></tbody>
                                                 </table>
+                                            </div>
+                                            <div class="manage-table-pagination">
+                                                <p class="manage-table-status" data-events-pagination-status="Rose Croix Solent" aria-live="polite"></p>
+                                                <div class="manage-table-pagination-controls">
+                                                    <div class="manage-table-page-size">
+                                                        <label class="manage-table-label" for="manage-events-page-size-solent">Rows</label>
+                                                        <div class="manage-table-select-shell">
+                                                            <select id="manage-events-page-size-solent" class="manage-table-select" data-events-page-size="Rose Croix Solent">
+                                                                <option value="5" selected>5</option>
+                                                                <option value="10">10</option>
+                                                                <option value="15">15</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="manage-table-pagination-actions">
+                                                    <button type="button" class="manage-table-pagination-button" data-events-prev-page="Rose Croix Solent">Previous</button>
+                                                    <button type="button" class="manage-table-pagination-button" data-events-next-page="Rose Croix Solent">Next</button>
+                                                </div>
                                             </div>
                                         </section>
                                     </div>
@@ -292,6 +483,21 @@
                                 <div class="form-actions mt-5">
                                     <button type="button" class="button-secondary" data-events-delete-cancel>Keep event</button>
                                     <button type="button" class="button-danger" data-events-delete-confirm>Delete event</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="events-modal is-hidden" data-news-delete-modal aria-hidden="true">
+                            <div class="events-modal-backdrop" data-news-close-delete-modal></div>
+                            <div class="events-modal-panel" role="dialog" aria-modal="true" aria-labelledby="news-delete-title">
+                                <h4 id="news-delete-title" class="text-xl text-[#6b1a1a]" style="font-family: 'Cinzel', serif;">Delete article?</h4>
+                                <p class="text-gray-700 leading-relaxed mt-3" data-news-delete-message>
+                                    This article will be removed after confirmation.
+                                </p>
+                                <p class="form-feedback mt-3" data-news-delete-feedback aria-live="polite"></p>
+                                <div class="form-actions mt-5">
+                                    <button type="button" class="button-secondary" data-news-delete-cancel>Keep article</button>
+                                    <button type="button" class="button-danger" data-news-delete-confirm>Delete article</button>
                                 </div>
                             </div>
                         </div>
@@ -325,7 +531,9 @@
     <script type="module">
         import { initManageHome } from '../assets/js/auth.js'
         import { initManageEvents } from '../assets/js/event.js'
+        import { initManageNews } from '../assets/js/manage-news.js'
         initManageHome()
+        initManageNews()
         initManageEvents()
     </script>
 </body>

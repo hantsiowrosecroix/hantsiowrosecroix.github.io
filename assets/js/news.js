@@ -1,6 +1,7 @@
 import { CLOUDFLARE_PROXY_URL } from './config.js';
 
 const SKELETON_COUNT = 3;
+const DATE_ONLY_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
 
 function escapeHtml(value) {
     return String(value ?? '')
@@ -11,16 +12,70 @@ function escapeHtml(value) {
         .replaceAll("'", '&#39;');
 }
 
+function renderNewsBody(value) {
+    const text = String(value ?? '');
+    const parts = text.split(/(https?:\/\/[^\s<]+)/g);
+
+    return parts.map((part) => {
+        if (/^https?:\/\/[^\s<]+$/.test(part)) {
+            const safeUrl = escapeHtml(part);
+            return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="text-[#6b1a1a] hover:underline font-semibold break-words">${safeUrl}</a>`;
+        }
+
+        return escapeHtml(part);
+    }).join('');
+}
+
+function parseTimestamp(value) {
+    const normalized = String(value ?? '').trim();
+    if (!normalized) {
+        return null;
+    }
+
+    const parsed = new Date(normalized);
+    return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
+function parseDateOnly(value, endOfDay = false) {
+    const normalized = String(value ?? '').trim();
+    const match = normalized.match(DATE_ONLY_PATTERN);
+
+    if (!match) {
+        return null;
+    }
+
+    const year = Number(match[1]);
+    const monthIndex = Number(match[2]) - 1;
+    const day = Number(match[3]);
+    const parsed = endOfDay
+        ? new Date(year, monthIndex, day, 23, 59, 59, 999)
+        : new Date(year, monthIndex, day, 0, 0, 0, 0);
+
+    if (
+        parsed.getFullYear() !== year
+        || parsed.getMonth() !== monthIndex
+        || parsed.getDate() !== day
+    ) {
+        return null;
+    }
+
+    return parsed;
+}
+
+function getExpiryDate(item) {
+    return parseDateOnly(item.expire_on, true) || parseTimestamp(item.expire_on);
+}
+
 function formatNewsDate(item) {
-    const month = item.Month ? String(item.Month).trim() : '';
-    const year = item.Year ? String(item.Year).trim() : '';
-    const fallbackDate = item.Timestamp ? new Date(item.Timestamp) : null;
+    const month = String(item.month ?? '').trim();
+    const year = item.year === null || item.year === undefined ? '' : String(item.year).trim();
+    const fallbackDate = parseTimestamp(item.timestamp);
 
     if (month && year) {
         return `${month} ${year}`;
     }
 
-    if (fallbackDate instanceof Date && !Number.isNaN(fallbackDate.getTime())) {
+    if (fallbackDate) {
         return fallbackDate.toLocaleString('en-GB', {
             month: 'long',
             year: 'numeric'
@@ -31,26 +86,15 @@ function formatNewsDate(item) {
 }
 
 function getSortDate(item) {
-    const candidates = [item.Timestamp, item['Expire On']];
-
-    for (const candidate of candidates) {
-        const date = new Date(candidate);
-        if (!Number.isNaN(date.getTime())) {
-            return date;
-        }
-    }
-
-    return new Date(0);
+    return parseTimestamp(item.timestamp)
+        || parseDateOnly(item.expire_on)
+        || getExpiryDate(item)
+        || new Date(0);
 }
 
 function isExpired(item) {
-    const expiryValue = item['Expire On'];
-    if (!expiryValue) {
-        return false;
-    }
-
-    const expiryDate = new Date(expiryValue);
-    if (Number.isNaN(expiryDate.getTime())) {
+    const expiryDate = getExpiryDate(item);
+    if (!expiryDate) {
         return false;
     }
 
@@ -79,12 +123,26 @@ function buildEmptyMarkup(message) {
 
 function buildNewsMarkup(items) {
     return items.map((item, index) => `
-        <article class="news-card border-b border-gray-200 pb-8${index === items.length - 1 ? ' news-card-last' : ''}">
-            <h4 class="text-2xl mb-2 text-[#6b1a1a]" style="font-family: 'Cinzel', serif;">${escapeHtml(item.Title || 'Untitled news item')}</h4>
+        <article class="news-card border-b border-gray-200 pb-8${index === items.length - 1 ? ' news-card-last' : ''}" data-news-id="${escapeHtml(item.id || '')}">
+            <h4 class="text-2xl mb-2 text-[#6b1a1a]" style="font-family: 'Cinzel', serif;">${escapeHtml(item.title || 'Untitled news item')}</h4>
             <p class="text-sm text-gray-500 mb-4 italic">${escapeHtml(formatNewsDate(item))}</p>
-            <p class="leading-relaxed">${escapeHtml(item.News || 'No content available.')}</p>
+            <p class="leading-relaxed whitespace-pre-line">${renderNewsBody(item.news || 'No content available.')}</p>
         </article>
     `).join('');
+}
+
+function normalizeNewsItems(items) {
+    return items
+        .filter((item) => item && typeof item === 'object')
+        .map((item) => ({
+            id: String(item.id ?? '').trim(),
+            timestamp: String(item.timestamp ?? '').trim(),
+            title: String(item.title ?? '').trim(),
+            month: String(item.month ?? '').trim(),
+            year: item.year,
+            expire_on: String(item.expire_on ?? '').trim(),
+            news: String(item.news ?? '').trim()
+        }));
 }
 
 function renderSection(target, items, emptyMessage) {
@@ -131,7 +189,8 @@ export async function initNews() {
             throw new Error('Unexpected news response');
         }
 
-        const sortedItems = [...payload.data].sort((left, right) => getSortDate(right) - getSortDate(left));
+        const newsItems = normalizeNewsItems(payload.data);
+        const sortedItems = [...newsItems].sort((left, right) => getSortDate(right) - getSortDate(left));
         const latestItems = sortedItems.filter((item) => !isExpired(item));
         const oldItems = sortedItems.filter((item) => isExpired(item));
 

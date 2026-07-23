@@ -206,23 +206,23 @@
                         Isle of Wight Districts of Solent and Wessex.
                     </p>
 
-                    <div class="news-sections" data-news-root>
-                        <section class="news-section">
+                    <div class="news-sections" data-news-root data-news-page="latest-news">
+                        <section class="news-section" aria-labelledby="latest-news-heading">
                             <div class="news-section-heading">
-                                <h3 class="text-2xl text-[#6b1a1a]" style="font-family: 'Cinzel', serif;">Latest News
+                                <h3 id="latest-news-heading" class="text-2xl text-[#6b1a1a]" style="font-family: 'Cinzel', serif;">Latest News
                                 </h3>
                                 <p class="text-sm text-gray-500 italic">Current announcements and active updates.</p>
                             </div>
-                            <div class="space-y-8" data-news-section="latest" aria-live="polite"></div>
+                            <div id="latest-news-list" class="space-y-8" data-news-section="latest" aria-live="polite"></div>
                         </section>
 
-                        <section class="news-section">
+                        <section class="news-section" aria-labelledby="archived-news-heading">
                             <div class="news-section-heading">
-                                <h3 class="text-2xl text-[#6b1a1a]" style="font-family: 'Cinzel', serif;">Old News</h3>
+                                <h3 id="archived-news-heading" class="text-2xl text-[#6b1a1a]" style="font-family: 'Cinzel', serif;">Old News</h3>
                                 <p class="text-sm text-gray-500 italic">Archived items shown once their expiry date has
                                     passed.</p>
                             </div>
-                            <div class="space-y-8" data-news-section="old" aria-live="polite"></div>
+                            <div id="archived-news-list" class="space-y-8" data-news-section="old" aria-live="polite"></div>
                         </section>
                     </div>
 
