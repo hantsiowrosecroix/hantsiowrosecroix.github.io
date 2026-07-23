@@ -1730,7 +1730,8 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     z-index: 100;
 }
 
@@ -1743,10 +1744,13 @@ a:hover {
 .events-modal-panel {
     position: relative;
     width: min(100%, 32rem);
+    max-height: calc(100dvh - 2rem);
+    margin: 1rem;
     padding: 1.25rem;
     border-radius: 0.5rem;
     background: #fffdf9;
     box-shadow: 0 24px 60px rgba(17, 24, 39, 0.2);
+    overflow-y: auto;
 }
 
 .events-modal-open {

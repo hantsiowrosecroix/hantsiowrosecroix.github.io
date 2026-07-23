@@ -57,6 +57,11 @@ async function parseJson(response) {
     }
 }
 
+function redirectToManageLogin() {
+    sessionStorage.removeItem('session-token')
+    window.location.href = '/manage/login.html'
+}
+
 function getUnexpectedResponseErrorMessage(response) {
     const contentType = response?.headers?.get('content-type') || ''
 
@@ -150,6 +155,11 @@ async function requestJson(endpoint, options = {}) {
 
     if (result === null) {
         throw new Error(getUnexpectedResponseErrorMessage(response))
+    }
+
+    if (response.status === 401 || result?.status === 401) {
+        redirectToManageLogin()
+        throw new Error(result?.error || result?.message || 'Your session has expired.')
     }
 
     if (!response.ok || result?.ok === false) {
