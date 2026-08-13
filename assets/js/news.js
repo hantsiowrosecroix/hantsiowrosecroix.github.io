@@ -13,7 +13,9 @@ function escapeHtml(value) {
 }
 
 function renderNewsBody(value) {
-    const text = String(value ?? '');
+    const text = String(value ?? '')
+        .replace(/\r\n?/g, '\n')
+        .replace(/\\r\\n|\\n|\\r/g, '\n');
     const parts = text.split(/(https?:\/\/[^\s<]+)/g);
 
     return parts.map((part) => {
@@ -22,7 +24,7 @@ function renderNewsBody(value) {
             return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="text-[#6b1a1a] hover:underline font-semibold break-words">${safeUrl}</a>`;
         }
 
-        return escapeHtml(part);
+        return escapeHtml(part).replaceAll('\n', '<br />');
     }).join('');
 }
 
@@ -126,7 +128,7 @@ function buildNewsMarkup(items) {
         <article class="news-card border-b border-gray-200 pb-8${index === items.length - 1 ? ' news-card-last' : ''}" data-news-id="${escapeHtml(item.id || '')}">
             <h4 class="text-2xl mb-2 text-[#6b1a1a]" style="font-family: 'Cinzel', serif;">${escapeHtml(item.title || 'Untitled news item')}</h4>
             <p class="text-sm text-gray-500 mb-4 italic">${escapeHtml(formatNewsDate(item))}</p>
-            <p class="leading-relaxed whitespace-pre-line">${renderNewsBody(item.news || 'No content available.')}</p>
+            <p class="leading-relaxed">${renderNewsBody(item.news || 'No content available.')}</p>
         </article>
     `).join('');
 }
