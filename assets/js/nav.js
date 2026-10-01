@@ -46,6 +46,12 @@ function initDesktopDropdowns(nav, navList) {
         });
 
         group.addEventListener('mouseleave', () => group.classList.remove('is-open'));
+
+        group.addEventListener('focusout', (event) => {
+            if (!group.contains(event.relatedTarget)) {
+                group.classList.remove('is-open');
+            }
+        });
     });
 
     document.addEventListener('click', (event) => {

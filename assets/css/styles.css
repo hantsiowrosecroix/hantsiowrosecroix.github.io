@@ -1260,6 +1260,36 @@ a:hover {
     display: block !important;
 }
 
+/* Desktop dropdowns stay rendered so they can fade down on open and fade up on close.
+   visibility is delayed on close so the fade-out finishes before the menu leaves the tab order. */
+@media (min-width: 976px) {
+    .nav-enhanced li.group>ul {
+        display: block !important;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-0.5rem);
+        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+    }
+
+    .nav-enhanced li.group:hover>ul,
+    .nav-enhanced li.group.is-open>ul {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+        transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s;
+    }
+}
+
+@media (min-width: 976px) and (prefers-reduced-motion: reduce) {
+    .nav-enhanced li.group>ul,
+    .nav-enhanced li.group:hover>ul,
+    .nav-enhanced li.group.is-open>ul {
+        transform: none;
+    }
+}
+
 @media (max-width: 1300px) and (min-width: 1253px) {
     header nav>div>ul>li>a.text-sm {
         font-size: 0.9rem;
