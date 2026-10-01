@@ -164,8 +164,63 @@ html:has(.rc-hero--sticky) {
 
 /* The page wrapper is a flex item of a 100%-height body; without this it shrinks to the
    viewport height and the sticky header would be released once that height is scrolled past */
-body > div:has(> .rc-hero--sticky) {
+body > div:has(> .rc-hero--sticky),
+body > div:has(> .rc-header-compact) {
     flex-shrink: 0;
+}
+
+/* Inner pages: no banner, the emblem lives in the nav bar (matches the docked home page state) */
+.rc-nav-logo {
+    display: block;
+    flex-shrink: 0;
+}
+
+.rc-nav-logo img {
+    display: block;
+    width: 36px;
+    height: 36px;
+    border-radius: 2px;
+}
+
+@media (min-width: 976px) {
+    .rc-header-compact {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+    }
+
+    .rc-header-compact nav {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .rc-header-compact nav > div {
+        position: relative;
+    }
+
+    .rc-header-compact .rc-nav-logo {
+        position: absolute;
+        top: 50%;
+        left: 1rem;
+        transform: translateY(-50%);
+    }
+
+    .rc-header-compact nav .js-nav-list {
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+
+    html:has(.rc-header-compact) {
+        scroll-padding-top: 3.5rem;
+    }
+}
+
+@media (max-width: 975px) {
+    .rc-header-compact nav > div {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+    }
 }
 
 :root {
