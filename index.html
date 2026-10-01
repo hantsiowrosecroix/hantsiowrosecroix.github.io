@@ -141,40 +141,21 @@
 <body>
     <div class="min-h-screen flex flex-col bg-[#f5f5f0]" style="font-family: 'Crimson Text', serif;">
         <!-- Header Section -->
-        <header class="bg-gradient-to-b from-[#6b1a1a] to-[#5a1515] text-white">
+        <header class="rc-hero bg-gradient-to-b from-[#6b1a1a] to-[#5a1515] text-white">
             <!-- Banner -->
-            <div class="container mx-auto px-4 py-8">
-                <div class="flex items-center justify-center gap-8 md:mb-4">
-                    <!-- Emblem -->
-                    <div class="block">
-                        <img src="./assets/images/golden_herald.png" alt="Rose Croix Emblem" class="rc-emblem">
-                    </div>
+            <div class="rc-hero-banner container mx-auto px-4">
+                <a href="./index.html" class="rc-hero-emblem-link" aria-label="Home">
+                    <img src="./assets/images/golden_herald.png" alt="Rose Croix Emblem" class="rc-emblem rc-hero-emblem">
+                </a>
 
-                    <!-- Title -->
-                    <a href="./index.html" class="text-center no-underline hidden md:block">
-                        <div
-                            class="bg-gradient-to-r from-[#8b2e2e] via-[#6b1a1a] to-[#8b2e2e] py-6 px-12 rounded-sm border border-[#C9A961]/30">
-                            <h1 class="text-5xl md:text-6xl mb-2"
-                                style="font-family: 'Pinyon Script', cursive; color: #E8D4A0;">
-                                The Supreme Council 33°
-                            </h1>
-                            <p class="text-3xl md:text-4xl tracking-widest"
-                                style="font-family: 'Pinyon Script', cursive; color: #E8D4A0;">
-                                Rose Croix
-                            </p>
-                            <div class="mt-4 pt-4 border-t border-[#C9A961]/30">
-                                <p class="text-xs tracking-[0.3em] text-[#E8D4A0]"
-                                    style="font-family: 'Cinzel', serif;">
-                                    HAMPSHIRE & ISLE OF WIGHT
-                                </p>
-                                <p class="text-xs tracking-[0.3em] text-[#E8D4A0]"
-                                    style="font-family: 'Cinzel', serif;">
-                                    DISTRICTS OF SOLENT AND WESSEX
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                <a href="./index.html" class="rc-hero-title no-underline">
+                    <h1 class="rc-hero-heading">
+                        <span>Hampshire &amp; Isle of Wight</span>
+                        <span class="rc-hero-heading-sub">Districts of Wessex &amp; Solent</span>
+                    </h1>
+                    <p class="rc-hero-order">Rose Croix</p>
+                    <p class="rc-hero-council">The Supreme Council 33°</p>
+                </a>
             </div>
 
             <!-- Navigation -->
@@ -274,6 +255,9 @@
 
         <!-- Main Content -->
         <main class="container mx-auto px-4 py-8 flex-1">
+            <!-- Mobile only: the emblem sits below the nav instead of in the banner -->
+            <img src="./assets/images/golden_herald.png" alt="" class="rc-hero-emblem-mobile">
+
             <div class="max-w-5xl mx-auto">
                 <div class="bg-white p-6 shadow-sm">
                     <h2 class="text-3xl mb-6" style="font-family: 'Cinzel', serif;">

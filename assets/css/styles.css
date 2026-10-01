@@ -14,6 +14,160 @@
     }
 }
 
+/* Compact hero banner (opt-in via header.rc-hero) */
+.rc-hero-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+}
+
+.rc-hero-emblem-link {
+    position: relative;
+    z-index: 45;
+    display: block;
+    flex-shrink: 0;
+    transform-origin: top left;
+    will-change: transform;
+}
+
+.rc-hero .rc-hero-emblem {
+    display: block;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 2px;
+}
+
+.rc-hero-title {
+    display: block;
+    color: var(--rc-gold-soft);
+}
+
+.rc-hero-heading {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--rc-gold-soft);
+}
+
+.rc-hero-heading span {
+    display: block;
+}
+
+.rc-hero-heading-sub {
+    margin-top: 0.15rem;
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    color: rgba(232, 212, 160, 0.85);
+}
+
+.rc-hero-order {
+    margin-top: 0.4rem;
+    padding-top: 0.3rem;
+    border-top: 1px solid rgba(201, 169, 97, 0.4);
+    font-family: 'Pinyon Script', cursive;
+    font-size: 1.4rem;
+    line-height: 1.1;
+}
+
+.rc-hero-council {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(232, 212, 160, 0.75);
+}
+
+.rc-hero-emblem-mobile {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .rc-hero-emblem-link {
+        display: none;
+    }
+
+    .rc-hero-title {
+        text-align: center;
+    }
+
+    .rc-hero-emblem-mobile {
+        display: block;
+        width: 6rem;
+        height: 6rem;
+        margin: 1.25rem auto;
+        border-radius: 2px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+}
+
+@media (min-width: 768px) {
+    .rc-hero-banner {
+        gap: 2rem;
+        padding-top: 1.75rem;
+        padding-bottom: 1.75rem;
+    }
+
+    .rc-hero .rc-hero-emblem {
+        width: 9rem;
+        height: 9rem;
+    }
+
+    .rc-hero-heading {
+        font-size: 1.5rem;
+    }
+
+    .rc-hero-heading-sub {
+        font-size: 0.8rem;
+    }
+
+    .rc-hero-order {
+        margin-top: 0.6rem;
+        padding-top: 0.4rem;
+        font-size: 2.25rem;
+    }
+
+    .rc-hero-council {
+        font-size: 0.7rem;
+    }
+}
+
+/* Desktop: header sticks so only the nav stays visible; the emblem docks into the nav (see hero.js) */
+.rc-hero--sticky {
+    position: sticky;
+    top: calc(var(--rc-banner-h, 0px) * -1);
+    z-index: 40;
+}
+
+.rc-hero--sticky nav {
+    transition: box-shadow 0.2s ease;
+}
+
+.rc-hero--sticky.is-docked nav {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.rc-hero--sticky nav .js-nav-list {
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+html:has(.rc-hero--sticky) {
+    scroll-padding-top: 3.5rem;
+}
+
+/* The page wrapper is a flex item of a 100%-height body; without this it shrinks to the
+   viewport height and the sticky header would be released once that height is scrolled past */
+body > div:has(> .rc-hero--sticky) {
+    flex-shrink: 0;
+}
+
 :root {
     --rc-bg: #f5f5f0;
     --rc-maroon: #6b1a1a;
