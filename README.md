@@ -39,3 +39,16 @@ node scripts/sync-layout.mjs
 ```
 
 This copies them into each page between the `<!-- shared:nav -->` and `<!-- shared:footer -->` markers, fixing the relative paths for pages in subfolders. Don't edit the menu or footer inside a page directly, as the next sync will overwrite it. Run `node scripts/sync-layout.mjs --check` to list any page that has drifted. No build step is needed to deploy; the pages stay plain HTML.
+
+## Chapter meeting dates
+
+Each chapter on the two chapter pages has its usual meeting pattern on its `<li>`, which the page uses to draw the month strip and work out the next meeting:
+
+```html
+<li data-schedule="3wed:3,9,11" data-install="11">Canute Chapter No. 41
+```
+
+- `3wed:3,9,11` means the third Wednesday of March, September and November. Use `-1` for the last one in the month (`-1fri:1,4,10`), and join different patterns with `;` (`4wed:1;4fri:3;4thu:9`).
+- `data-install` is the month of the Installation meeting.
+
+When a chapter changes its pattern, update both this attribute and the written sentence below it.

@@ -3,7 +3,7 @@
 
 const STORAGE_KEY = 'rc-cookie-consent';
 // Bump whenever the categories, or what they cover, change so everyone is asked again
-const CONSENT_VERSION = 1;
+const CONSENT_VERSION = 2;
 const MAX_AGE_MS = 365 * 24 * 60 * 60 * 1000;
 const GA_MEASUREMENT_ID = 'G-F4RM5B8KMJ';
 const GA_SCRIPT_ID = 'rc-ga-script';
@@ -153,8 +153,8 @@ function buildPanel() {
                 <p class="rc-consent-card-desc" id="rc-consent-necessary-desc">
                     Keep the website working and secure: remembering this choice, keeping officers signed in to
                     the news and events editor, sending the contact form and loading news and events through
-                    Cloudflare, and loading the site's fonts and icons from Google Fonts and unpkg. None of these
-                    are used to track you.
+                    Cloudflare, loading the site's fonts and icons from Google Fonts and unpkg, and showing where
+                    each Masonic centre is with Google Maps. We don't use any of these to track you.
                 </p>
             </section>
 
