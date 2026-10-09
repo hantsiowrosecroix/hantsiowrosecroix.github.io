@@ -122,8 +122,7 @@ In addition to the above, the homepage received special structured data:
 - Member of Supreme Council 33°
 
 ### WebSite Schema
-- Site search functionality
-- Search action configuration
+- Site name and URL (no search action, as the site has no search page)
 
 ### SiteNavigationElement Schema
 - Key navigation pages marked for Google Sitelinks:

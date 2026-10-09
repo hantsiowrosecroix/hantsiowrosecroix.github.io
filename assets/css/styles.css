@@ -1,5 +1,4 @@
-/* Rose Croix static site stylesheet */
-@import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+/* Rose Croix static site stylesheet (fonts are linked from each page head) */
 
 /* Emblem sizing: half size on mobile, full size on md+ */
 .rc-emblem {
@@ -234,6 +233,14 @@ body {
     height: 100%;
     font-size: 1.25rem;
     font-family: 'Crimson Text', serif;
+}
+
+/* Browsers don't let form controls inherit the page font, so they fall back to Arial */
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
 }
 
 body {
@@ -1896,6 +1903,31 @@ html.rc-consent-open body {
 
 .rc-consent-btn:focus-visible {
     outline: 2px solid var(--rc-gold-soft);
+    outline-offset: 2px;
+}
+
+/* Call-to-action button, matching the maroon link buttons such as the home page's district links */
+.rc-cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border: 0;
+    background: var(--rc-maroon);
+    font: inherit;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.rc-cta-button:hover,
+.rc-cta-button:focus-visible {
+    background: var(--rc-gold);
+    color: #1a1a1a;
+}
+
+.rc-cta-button:focus-visible {
+    outline: 2px solid var(--rc-maroon);
     outline-offset: 2px;
 }
 

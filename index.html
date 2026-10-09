@@ -22,7 +22,7 @@
     <meta property="og:url" content="https://www.hantsiowrosecroix.org.uk/">
     <meta property="og:title" content="Hampshire &amp; Isle of Wight Districts of Solent and Wessex - Rose Croix">
     <meta property="og:description" content="Welcome to the Rose Croix Hampshire & Isle of Wight Districts of Solent and Wessex. A Christian Masonic Order working under the Supreme Council 33°.">
-    <meta property="og:image" content="https://www.hantsiowrosecroix.org.uk/assets/images/golden_herald.png">
+    <meta property="og:image" content="https://www.hantsiowrosecroix.org.uk/assets/images/golden_herald_1200.jpg">
     <meta property="og:locale" content="en_GB">
     
     <!-- Twitter -->
@@ -30,7 +30,7 @@
     <meta name="twitter:url" content="https://www.hantsiowrosecroix.org.uk/">
     <meta name="twitter:title" content="Hampshire &amp; Isle of Wight Districts of Solent and Wessex - Rose Croix">
     <meta name="twitter:description" content="Welcome to the Rose Croix Hampshire & Isle of Wight Districts of Solent and Wessex. A Christian Masonic Order working under the Supreme Council 33°.">
-    <meta name="twitter:image" content="https://www.hantsiowrosecroix.org.uk/assets/images/golden_herald.png">
+    <meta name="twitter:image" content="https://www.hantsiowrosecroix.org.uk/assets/images/golden_herald_1200.jpg">
     
     <!-- Favicons -->
     <link rel="icon" href="./rose-croix-icon.jpg" sizes="32x32">
@@ -46,6 +46,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
     <!-- Stylesheet -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&amp;family=Cinzel:wght@400;600;700&amp;family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap">
     <link rel="stylesheet" href="./assets/css/styles.css">
     
     <!-- Structured Data - Organization Schema -->
@@ -55,7 +56,7 @@
       "@type": "Organization",
       "name": "Hampshire & Isle of Wight Districts of Solent and Wessex - Rose Croix",
       "url": "https://www.hantsiowrosecroix.org.uk/",
-      "logo": "https://www.hantsiowrosecroix.org.uk/assets/images/golden_herald.png",
+      "logo": "https://www.hantsiowrosecroix.org.uk/assets/images/golden_herald_1200.jpg",
       "description": "The Rose Croix Hampshire & Isle of Wight Districts of Solent and Wessex, part of the Ancient & Accepted Rite under the Supreme Council 33° for England and Wales.",
       "areaServed": {
         "@type": "Place",
@@ -74,15 +75,7 @@
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Hampshire & Isle of Wight Districts of Solent and Wessex - Rose Croix",
-      "url": "https://www.hantsiowrosecroix.org.uk/",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://www.hantsiowrosecroix.org.uk/?s={search_term_string}"
-        },
-        "query-input": "required name=search_term_string"
-      }
+      "url": "https://www.hantsiowrosecroix.org.uk/"
     }
     </script>
     
@@ -152,6 +145,7 @@
             <nav class="bg-[#1a1a1a]">
                 <div class="container mx-auto px-4">
                     <ul class="flex items-center justify-center">
+                        <!-- shared:nav (edit scripts/partials/nav.html, then run node scripts/sync-layout.mjs) -->
                         <li class="relative">
                             <a href="./index.html"
                                 class="flex items-center gap-1 px-4 py-3 text-sm hover:bg-[#6b1a1a] transition-colors duration-200 no-underline text-white">
@@ -238,6 +232,7 @@
                                         class="block px-4 py-2 text-sm hover:bg-[#6b1a1a] transition-colors duration-200 no-underline text-white">Contact Us</a></li>
                             </ul>
                         </li>
+                        <!-- /shared:nav -->
                     </ul>
                 </div>
             </nav>
@@ -278,7 +273,10 @@
                     </div>
 
                     <figure class="mb-8">
-                        <img src="./assets/images/wessex_solent_map.png"
+                        <img src="./assets/images/wessex_solent_map_1448.webp"
+                            srcset="./assets/images/wessex_solent_map_800.webp 800w, ./assets/images/wessex_solent_map_1448.webp 1448w"
+                            sizes="(min-width: 1024px) 976px, 100vw"
+                            width="1448" height="1086"
                             alt="Illustrative map showing approximate chapter areas across the Solent and Wessex districts"
                             class="block w-full max-w-full h-auto border border-[#C9A961]/30 shadow-lg"
                             loading="lazy" decoding="async">
@@ -291,12 +289,13 @@
         </main>
 
         <!-- Footer -->
+        <!-- shared:footer (edit scripts/partials/footer.html, then run node scripts/sync-layout.mjs) -->
         <footer class="bg-gradient-to-b from-[#6b1a1a] to-[#5a1515] text-white py-6 mt-12">
             <div class="container mx-auto px-4">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
                     <div class="flex flex-wrap gap-3 md:gap-6 justify-center md:justify-start">
                         <a href="./index.html" class="hover:text-[#E8D4A0] transition-colors no-underline text-white">
-                            Hampshire & Isle of Wight Districts of Solent and Wessex
+                            Hampshire &amp; Isle of Wight Districts of Solent and Wessex
                         </a>
                         <span class="text-gray-400">|</span>
                         <a href="./data-protection.html"
@@ -307,13 +306,14 @@
                         <button type="button" class="rc-footer-link-button" data-cookie-settings>Cookie settings</button>
                     </div>
                     <div class="text-gray-300 text-xs">
-                        <a target="_blank" href="https://developer.mjhub.co.uk/" class="hover:text-[#E8D4A0] transition-colors no-underline text-gray-300">
+                        <a href="https://developer.mjhub.co.uk/" target="_blank" rel="noopener" class="hover:text-[#E8D4A0] transition-colors no-underline text-gray-300">
                             Created by Marcel Mulders
                         </a>
                     </div>
                 </div>
             </div>
         </footer>
+        <!-- /shared:footer -->
     </div>
     <script type="module" src="./assets/js/main.js"></script>
 </body>

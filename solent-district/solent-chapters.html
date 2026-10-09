@@ -10,6 +10,9 @@
     <link rel="icon" href="../rose-croix-icon.jpg" sizes="192x192">
     <link rel="apple-touch-icon" href="../rose-croix-icon.jpg">
     <meta name="msapplication-TileImage" content="../rose-croix-icon.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&amp;family=Cinzel:wght@400;600;700&amp;family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap">
     <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 
@@ -24,6 +27,7 @@
                         <img src="../assets/images/golden_herald_360.webp" alt="Rose Croix Emblem">
                     </a>
                     <ul class="flex items-center justify-center">
+                        <!-- shared:nav (edit scripts/partials/nav.html, then run node scripts/sync-layout.mjs) -->
                         <li class="relative">
                             <a href="../index.html"
                                 class="flex items-center gap-1 px-4 py-3 text-sm hover:bg-[#6b1a1a] transition-colors duration-200 no-underline text-white">
@@ -82,16 +86,16 @@
                                 <li><a href="../solent-district.html"
                                         class="block px-4 py-2 text-sm hover:bg-[#6b1a1a] transition-colors duration-200 no-underline text-white">About
                                         the district</a></li>
-                                <li><a href="./solent-events.html"
+                                <li><a href="../solent-district/solent-events.html"
                                         class="block px-4 py-2 text-sm hover:bg-[#6b1a1a] transition-colors duration-200 no-underline text-white">Meetings &amp; Events</a>
                                 </li>
-                                <li><a href="./solent-centres.html"
+                                <li><a href="../solent-district/solent-centres.html"
                                         class="block px-4 py-2 text-sm hover:bg-[#6b1a1a] transition-colors duration-200 no-underline text-white">Centres</a>
                                 </li>
-                                <li><a href="./solent-chapters.html"
+                                <li><a href="../solent-district/solent-chapters.html"
                                         class="block px-4 py-2 text-sm hover:bg-[#6b1a1a] transition-colors duration-200 no-underline text-white">Chapters</a>
                                 </li>
-                                <li><a href="./solent-history.html"
+                                <li><a href="../solent-district/solent-history.html"
                                         class="block px-4 py-2 text-sm hover:bg-[#6b1a1a] transition-colors duration-200 no-underline text-white">History</a>
                                 </li>
                             </ul>
@@ -110,6 +114,7 @@
                                         class="block px-4 py-2 text-sm hover:bg-[#6b1a1a] transition-colors duration-200 no-underline text-white">Contact Us</a></li>
                             </ul>
                         </li>
+                        <!-- /shared:nav -->
                     </ul>
                 </div>
             </nav>
@@ -359,27 +364,31 @@
         </main>
 
         <!-- Footer -->
+        <!-- shared:footer (edit scripts/partials/footer.html, then run node scripts/sync-layout.mjs) -->
         <footer class="bg-gradient-to-b from-[#6b1a1a] to-[#5a1515] text-white py-6 mt-12">
             <div class="container mx-auto px-4">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
                     <div class="flex flex-wrap gap-3 md:gap-6 justify-center md:justify-start">
-                        <a href="../index.html" class="hover:text-[#E8D4A0] text-white no-underline">District of
-                            Hampshire
-                            & Isle of Wight Wessex</a>
+                        <a href="../index.html" class="hover:text-[#E8D4A0] transition-colors no-underline text-white">
+                            Hampshire &amp; Isle of Wight Districts of Solent and Wessex
+                        </a>
                         <span class="text-gray-400">|</span>
-                        <a href="../data-protection.html" class="hover:text-[#E8D4A0] text-white no-underline">Data
-                            Protection Policy</a>
+                        <a href="../data-protection.html"
+                            class="hover:text-[#E8D4A0] transition-colors no-underline text-white">
+                            Data Protection Policy
+                        </a>
                         <span class="text-gray-400">|</span>
                         <button type="button" class="rc-footer-link-button" data-cookie-settings>Cookie settings</button>
                     </div>
                     <div class="text-gray-300 text-xs">
-                        <a target="_blank" href="https://developer.mjhub.co.uk/" class="hover:text-[#E8D4A0] transition-colors no-underline text-gray-300">
+                        <a href="https://developer.mjhub.co.uk/" target="_blank" rel="noopener" class="hover:text-[#E8D4A0] transition-colors no-underline text-gray-300">
                             Created by Marcel Mulders
                         </a>
                     </div>
                 </div>
             </div>
         </footer>
+        <!-- /shared:footer -->
     </div>
     <script type="module" src="../assets/js/main.js"></script>
     <script type="module">

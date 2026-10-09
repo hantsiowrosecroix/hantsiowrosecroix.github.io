@@ -20,14 +20,14 @@
     <meta property="og:url" content="https://www.hantsiowrosecroix.org.uk/wessex-district.html">
     <meta property="og:title" content="Wessex District - Rose Croix">
     <meta property="og:description" content="The Wessex District of Hampshire & Isle of Wight serves Rose Croix Chapters across the region.">
-    <meta property="og:image" content="https://www.hantsiowrosecroix.org.uk/assets/images/golden_herald.png">
+    <meta property="og:image" content="https://www.hantsiowrosecroix.org.uk/assets/images/golden_herald_1200.jpg">
     <meta property="og:locale" content="en_GB">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Wessex District - Rose Croix">
     <meta name="twitter:description" content="The Wessex District of Hampshire & Isle of Wight serves Rose Croix Chapters across the region.">
-    <meta name="twitter:image" content="https://www.hantsiowrosecroix.org.uk/assets/images/golden_herald.png">
+    <meta name="twitter:image" content="https://www.hantsiowrosecroix.org.uk/assets/images/golden_herald_1200.jpg">
     
     <!-- Breadcrumb Structured Data -->
     <script type="application/ld+json">
@@ -53,6 +53,9 @@
     <link rel="icon" href="./rose-croix-icon.jpg" sizes="192x192">
     <link rel="apple-touch-icon" href="./rose-croix-icon.jpg">
     <meta name="msapplication-TileImage" content="./rose-croix-icon.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&amp;family=Cinzel:wght@400;600;700&amp;family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap">
     <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
 
@@ -66,6 +69,7 @@
                         <img src="./assets/images/golden_herald_360.webp" alt="Rose Croix Emblem">
                     </a>
                     <ul class="flex items-center justify-center">
+                        <!-- shared:nav (edit scripts/partials/nav.html, then run node scripts/sync-layout.mjs) -->
                         <li class="relative">
                             <a href="./index.html"
                                 class="flex items-center gap-1 px-4 py-3 text-sm hover:bg-[#6b1a1a] transition-colors duration-200 no-underline text-white">
@@ -152,6 +156,7 @@
                                         class="block px-4 py-2 text-sm hover:bg-[#6b1a1a] transition-colors duration-200 no-underline text-white">Contact Us</a></li>
                             </ul>
                         </li>
+                        <!-- /shared:nav -->
                     </ul>
                 </div>
             </nav>
@@ -187,9 +192,8 @@
                             style="font-family: 'Cinzel', serif;">District Leadership</h3>
 
                         <div class="mb-6">
-                            <h4 class="text-xl mb-3 text-[#6b1a1a]" style="font-family: 'Cinzel', serif;">Inspector
-                                General Designate in Charge</h4>
-                            <p class="mb-2"><strong>V∴Ill∴Bro. Charles McGeoch 33°</strong></p>
+                            <h4 class="text-xl mb-3 text-[#6b1a1a]" style="font-family: 'Cinzel', serif;"><span data-officer="wessex.inspectorGeneral" data-officer-field="title">Inspector General Designate in Charge</span></h4>
+                            <p class="mb-2"><strong><span data-officer="wessex.inspectorGeneral" data-officer-field="name">V∴Ill∴Bro. Charles McGeoch 33°</span></strong></p>
                             <p class="leading-relaxed text-gray-700">
                                 The Inspector General provides leadership and guidance to all Chapters within the Wessex
                                 District. He is responsible for overseeing the work of the Order and ensuring that the
@@ -198,9 +202,8 @@
                         </div>
 
                         <div class="mb-6">
-                            <h4 class="text-xl mb-3 text-[#6b1a1a]" style="font-family: 'Cinzel', serif;">District
-                                Recorder</h4>
-                            <p class="mb-2"><strong>Ill∴Bro. Colin Brown 32°</strong></p>
+                            <h4 class="text-xl mb-3 text-[#6b1a1a]" style="font-family: 'Cinzel', serif;"><span data-officer="wessex.recorder" data-officer-field="title">District Recorder</span></h4>
+                            <p class="mb-2"><strong><span data-officer="wessex.recorder" data-officer-field="name">Ill∴Bro. Colin Brown 32°</span></strong></p>
                             <p class="leading-relaxed text-gray-700">
                                 The District Recorder handles administrative matters for the district and serves as the
                                 primary point of contact for those interested in joining the Order or seeking
@@ -238,7 +241,7 @@
                         </p>
 
                         <div class="bg-white border-l-4 border-[#6b1a1a] p-6">
-                            <p class="mb-2"><strong>District Recorder:</strong> Ill∴Bro. Colin Brown 32°</p>
+                            <p class="mb-2"><strong><span data-officer="wessex.recorder" data-officer-field="title">District Recorder</span>:</strong> <span data-officer="wessex.recorder" data-officer-field="name">Ill∴Bro. Colin Brown 32°</span></p>
                             <p class="text-sm text-gray-600">
                                 For membership inquiries, general questions, or to be put in touch with your local
                                 Chapter
@@ -249,25 +252,31 @@
             </div>
         </main>
 
+        <!-- shared:footer (edit scripts/partials/footer.html, then run node scripts/sync-layout.mjs) -->
         <footer class="bg-gradient-to-b from-[#6b1a1a] to-[#5a1515] text-white py-6 mt-12">
             <div class="container mx-auto px-4">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
                     <div class="flex flex-wrap gap-3 md:gap-6 justify-center md:justify-start">
-                        <a href="./index.html" class="hover:text-[#E8D4A0] text-white no-underline">Hampshire & Isle of Wight Districts of Solent and Wessex</a>
+                        <a href="./index.html" class="hover:text-[#E8D4A0] transition-colors no-underline text-white">
+                            Hampshire &amp; Isle of Wight Districts of Solent and Wessex
+                        </a>
                         <span class="text-gray-400">|</span>
-                        <a href="./data-protection.html" class="hover:text-[#E8D4A0] text-white no-underline">Data
-                            Protection Policy</a>
+                        <a href="./data-protection.html"
+                            class="hover:text-[#E8D4A0] transition-colors no-underline text-white">
+                            Data Protection Policy
+                        </a>
                         <span class="text-gray-400">|</span>
                         <button type="button" class="rc-footer-link-button" data-cookie-settings>Cookie settings</button>
                     </div>
                     <div class="text-gray-300 text-xs">
-                        <a target="_blank" href="https://developer.mjhub.co.uk/" class="hover:text-[#E8D4A0] transition-colors no-underline text-gray-300">
+                        <a href="https://developer.mjhub.co.uk/" target="_blank" rel="noopener" class="hover:text-[#E8D4A0] transition-colors no-underline text-gray-300">
                             Created by Marcel Mulders
                         </a>
                     </div>
                 </div>
             </div>
         </footer>
+        <!-- /shared:footer -->
     </div>
     <script type="module" src="./assets/js/main.js"></script>
 </body>
